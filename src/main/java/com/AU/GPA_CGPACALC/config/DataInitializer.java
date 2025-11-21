@@ -9,10 +9,12 @@ import com.AU.GPA_CGPACALC.repository.RegulationRepository;
 import com.AU.GPA_CGPACALC.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("dev")   // ⭐ Only run locally, not in Render
 public class DataInitializer implements CommandLineRunner {
 
     @Autowired
@@ -29,16 +31,13 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-
         initializeRegulations();
         initializeDepartments();
         initializeAdminUser();
     }
 
     private void initializeRegulations() {
-
         if (regulationRepository.count() == 0) {
-
             Regulation r2017 = new Regulation();
             r2017.setName("R2017");
             r2017.setYear(2017);
@@ -57,7 +56,6 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void initializeDepartments() {
-
         if (departmentRepository.count() == 0) {
 
             Regulation defaultReg = regulationRepository.findByName("R2021")
@@ -65,19 +63,14 @@ public class DataInitializer implements CommandLineRunner {
 
             departmentRepository.save(createDept("Computer Science Engineering",
                     "CSE", "Department of CSE", defaultReg));
-
             departmentRepository.save(createDept("Information Technology",
                     "IT", "Department of IT", defaultReg));
-
             departmentRepository.save(createDept("Electronics and Communication Engineering",
                     "ECE", "Department of ECE", defaultReg));
-
             departmentRepository.save(createDept("Electrical and Electronics Engineering",
                     "EEE", "Department of EEE", defaultReg));
-
             departmentRepository.save(createDept("Mechanical Engineering",
                     "MECH", "Department of Mechanical Engineering", defaultReg));
-
             departmentRepository.save(createDept("Civil Engineering",
                     "CIVIL", "Department of Civil Engineering", defaultReg));
 
@@ -90,13 +83,12 @@ public class DataInitializer implements CommandLineRunner {
         d.setName(name);
         d.setCode(code);
         d.setDescription(desc);
-        d.setSemesterCount(8);  // default
+        d.setSemesterCount(8);
         d.setRegulation(regulation);
         return d;
     }
 
     private void initializeAdminUser() {
-
         if (userRepository.findByEmail("admin@gpa.com").isEmpty()) {
 
             User admin = new User();
@@ -107,8 +99,6 @@ public class DataInitializer implements CommandLineRunner {
             admin.setVerified(true);
 
             userRepository.save(admin);
-
-
 
             System.out.println("Initialized admin: admin@gpa.com / admin123");
         }
