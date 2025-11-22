@@ -85,22 +85,24 @@ public class SecurityConfig {
 
    @Bean
 public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
+    CorsConfiguration config = new CorsConfiguration();
 
-    configuration.setAllowedOrigins(Arrays.asList(
-            System.getenv("ALLOWED_ORIGIN") != null
-                    ? System.getenv("ALLOWED_ORIGIN")
-                    : "http://localhost:5173"
-    ));  // your react local + vercel production
+    // Allowed frontend origins
+    config.setAllowedOrigins(Arrays.asList(
+        "https://your-frontend-url.vercel.app",  // ❗ change this later
+        "http://localhost:5173"
+    ));
 
-    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    configuration.setAllowedHeaders(Arrays.asList("*"));
-    configuration.setAllowCredentials(true);
+    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    config.setAllowedHeaders(Arrays.asList("*"));
+    config.setAllowCredentials(true);
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
+    source.registerCorsConfiguration("/**", config);
 
     return source;
 }
+
+
 
 }
