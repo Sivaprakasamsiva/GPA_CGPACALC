@@ -83,13 +83,14 @@ public class SecurityConfig {
         return http.build();
     }
 
-   @Bean
+  @Bean
 public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();
 
-    // Allowed frontend origins
+    // ⭐ Your allowed frontend URLs
     config.setAllowedOrigins(Arrays.asList(
-        "https://your-frontend-url.vercel.app",  // ❗ change this later
+        "https://gradetrack-pro.vercel.app",
+        "https://gradetrack-l7scouelw-sivaprakasams-projects-a1da0e4e.vercel.app",
         "http://localhost:5173"
     ));
 
@@ -102,6 +103,7 @@ public CorsConfigurationSource corsConfigurationSource() {
 
     return source;
 }
+
 
 
 
